@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<meta name="theme-color"
+content="#1769aa">
+
+<title>Calculadora de Compras</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+html,
+body{
+width:100%;
+min-height:100%;
+font-family:Arial,Helvetica,sans-serif;
+background:#eef2f7;
+color:#17212b;
+}
+
+body{
+padding-bottom:50px;
+}
+
+header{
+width:100%;
+background:#1769aa;
+color:white;
+padding:18px 15px;
+position:sticky;
+top:0;
+z-index:100;
+box-shadow:0 3px 12px rgba(0,0,0,.20);
+}
+
+header h1{
+font-size:23px;
+margin-bottom:6px;
+}
+
+header p{
+font-size:13px;
+opacity:.92;
+}
+
+.container{
+width:100%;
+max-width:900px;
+margin:auto;
+padding:12px;
+}
+
+.card{
+width:100%;
+background:white;
+border-radius:16px;
+padding:15px;
+margin-bottom:12px;
+box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.resumo{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.resumoBox{
+background:#edf6ff;
+border-radius:13px;
+padding:14px;
+}
+
+.resumoBox strong{
+display:block;
+font-size:11px;
+color:#667085;
+margin-bottom:6px;
+}
+
+.resumoBox span{
+display:block;
+font-size:22px;
+font-weight:bold;
+color:#1769aa;
+}
+
+.botoes{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+}
+
+button{
+border:0;
+border-radius:11px;
+padding:13px;
+font-size:14px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+.azul{
+background:#1769aa;
+color:white;
+}
+
+.verde{
+background:#00a884;
+color:white;
+}
+
+.vermelho{
+background:#d93025;
+color:white;
+}
+
+.cinza{
+background:#e8edf3;
+color:#263442;
+}
+
+.busca{
+width:100%;
+padding:13px;
+border:1px solid #d6dee8;
+border-radius:11px;
+font-size:16px;
+outline:none;
+margin-bottom:12px;
+}
+
+.busca:focus{
+border-color:#1769aa;
+}
+
+.tituloLista{
+display:grid;
+grid-template-columns:1fr 100px 80px 38px;
+gap:7px;
+align-items:center;
+margin-bottom:8px;
+}
+
+.tituloLista strong{
+font-size:17px;
+}
+
+.tituloLista span{
+color:#667085;
+font-size:11px;
+text-align:center;
+}
+
+.item{
+display:grid;
+grid-template-columns:1fr 105px 70px 38px;
+gap:7px;
+align-items:center;
+padding:9px 0;
+border-bottom:1px solid #edf0f3;
+}
+
+.item:last-child{
+border-bottom:0;
+}
+
+.nomeProduto{
+font-weight:bold;
+font-size:14px;
+}
+
+.preco,
+.quantidade{
+width:100%;
+padding:11px 7px;
+border:1px solid #d6dee8;
+border-radius:9px;
+font-size:14px;
+outline:none;
+}
+
+.preco{
+text-align:right;
+}
+
+.quantidade{
+text-align:center;
+}
+
+.preco:focus,
+.quantidade:focus{
+border-color:#1769aa;
+}
+
+.remover{
+padding:9px 5px;
+background:#fff0ef;
+color:#d93025;
+}
+
+.subtotalItem{
+font-size:11px;
+font-weight:bold;
+color:#008866;
+margin-top:4px;
+text-align:right;
+}
+
+.calculadoraTitulo{
+font-size:17px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.calculo{
+width:100%;
+padding:14px;
+border:1px solid #d6dee8;
+border-radius:10px;
+font-size:19px;
+text-align:right;
+outline:none;
+}
+
+.resultadoCalculadora{
+margin-top:10px;
+background:#eef9f5;
+border-radius:12px;
+padding:14px;
+}
+
+.resultadoCalculadora small{
+display:block;
+color:#667085;
+margin-bottom:5px;
+}
+
+.resultadoCalculadora strong{
+display:block;
+font-size:27px;
+color:#008866;
+}
+
+.linha{
+margin-bottom:10px;
+}
+
+.linha label{
+display:block;
+font-size:13px;
+font-weight:bold;
+margin-bottom:6px;
+}
+
+.valorGrande{
+font-size:29px;
+font-weight:bold;
+color:#1769aa;
+}
+
+.vazio{
+text-align:center;
+padding:25px 10px;
+color:#667085;
+}
+
+.info{
+font-size:12px;
+color:#667085;
+line-height:1.5;
+}
+
+.totalItens{
+font-size:13px;
+color:#667085;
+margin-top:5px;
+}
+
+.quantidadeTitulo{
+font-size:10px;
+}
+
+@media(max-width:600px){
+
+.item{
+grid-template-columns:
+minmax(100px,1fr)
+88px
+62px
+34px;
+gap:5px;
+}
+
+.tituloLista{
+grid-template-columns:
+minmax(100px,1fr)
+88px
+62px
+34px;
+gap:5px;
+}
+
+.nomeProduto{
+font-size:13px;
+}
+
+.preco,
+.quantidade{
+font-size:13px;
+padding:10px 5px;
+}
+
+.tituloLista span{
+font-size:9px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🛒 Calculadora de Compras</h1>
+
+<p>
+Preço × quantidade = valor do produto
+</p>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- RESUMO PRINCIPAL -->
+
+<div class="card">
+
+<div class="resumo">
+
+<div class="resumoBox">
+
+<strong>TOTAL DA COMPRA</strong>
+
+<span id="totalCompra">
+R$ 0,00
+</span>
+
+</div>
+
+
+<div class="resumoBox">
+
+<strong>ITENS COMPRADOS</strong>
+
+<span id="quantidadeItens">
+0
+</span>
+
+</div>
+
+</div>
+
+<div class="totalItens">
+
+Quantidade total de unidades:
+<b id="unidadesTotais">0</b>
+
+</div>
+
+</div>
+
+
+<!-- BOTÕES -->
+
+<div class="card">
+
+<div class="botoes">
+
+<button
+class="azul"
+onclick="adicionarProduto()">
+
+＋ Adicionar item
+
+</button>
+
+
+<button
+class="cinza"
+onclick="limparPrecos()">
+
+🗑 Limpar preços
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- LISTA DE COMPRAS -->
+
+<div class="card">
+
+<div class="tituloLista">
+
+<strong>🛍 Produtos</strong>
+
+<span>PREÇO</span>
+
+<span>QTD.</span>
+
+<span></span>
+
+</div>
+
+
+<input
+class="busca"
+id="campoBusca"
+type="text"
+placeholder="🔎 Procurar produto..."
+oninput="filtrarProdutos()">
+
+
+<div id="listaProdutos"></div>
+
+</div>
+
+
+<!-- CALCULADORA RÁPIDA -->
+
+<div class="card">
+
+<div class="calculadoraTitulo">
+
+🧮 Calculadora rápida
+
+</div>
+
+
+<input
+class="calculo"
+id="campoCalculo"
+type="text"
+inputmode="decimal"
+placeholder="Ex.: 10 + 5,50 - 2">
+
+
+<br>
+<br>
+
+
+<button
+class="verde"
+style="width:100%;"
+onclick="calcularRapido()">
+
+CALCULAR
+
+</button>
+
+
+<div class="resultadoCalculadora">
+
+<small>
+Resultado
+</small>
+
+<strong id="resultadoRapido">
+R$ 0,00
+</strong>
+
+</div>
+
+</div>
+
+
+<!-- DESCONTO -->
+
+<div class="card">
+
+<div class="linha">
+
+<label for="desconto">
+
+💸 Desconto
+
+</label>
+
+
+<input
+class="preco"
+id="desconto"
+type="text"
+inputmode="decimal"
+placeholder="R$ 0,00"
+oninput="atualizarTotal()">
+
+</div>
+
+
+<div class="linha">
+
+<label>
+
+Subtotal
+
+</label>
+
+
+<div
+id="subtotal"
+class="valorGrande">
+
+R$ 0,00
+
+</div>
+
+</div>
+
+
+<div class="linha">
+
+<label>
+
+DESCONTO APLICADO
+
+</label>
+
+
+<div
+id="descontoMostrado"
+class="totalItens">
+
+R$ 0,00
+
+</div>
+
+</div>
+
+
+<div class="linha">
+
+<label>
+
+TOTAL FINAL
+
+</label>
+
+
+<div
+id="totalFinal"
+class="valorGrande">
+
+R$ 0,00
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- EXPLICAÇÃO -->
+
+<div class="card">
+
+<div class="info">
+
+<b>Como usar:</b>
+
+<br>
+<br>
+
+1. Digite o preço do produto.
+
+<br>
+
+2. Digite quantas unidades você deseja comprar.
+
+<br>
+
+3. O valor daquele produto será calculado automaticamente.
+
+<br>
+
+4. O total geral será atualizado automaticamente.
+
+<br>
+
+5. Você pode pesquisar qualquer produto.
+
+<br>
+
+6. Use "Adicionar item" para produtos que não estão na lista.
+
+<br>
+
+7. Use a calculadora rápida para outras contas.
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* ==========================================================
+   LISTA DE PRODUTOS
+   ========================================================== */
+
+const produtosIniciais = [
+
+"Arroz",
+"Feijão",
+"Açúcar",
+"Sal",
+"Óleo",
+"Macarrão",
+"Farinha",
+"Carne",
+"Frango",
+"Peixe",
+"Ovos",
+"Leite",
+"Café",
+"Manteiga",
+"Margarina",
+"Queijo",
+"Presunto",
+"Linguiça",
+"Pão",
+"Bolachas",
+"Biscoitos",
+"Doces",
+"Chocolate",
+"Salgadinhos",
+"Cereais",
+"Aveia",
+"Molho de tomate",
+"Extrato de tomate",
+"Maionese",
+"Ketchup",
+"Mostarda",
+"Vinagre",
+"Azeite",
+"Temperos",
+"Alho",
+"Cebola",
+"Batata",
+"Tomate",
+"Cenoura",
+"Alface",
+"Repolho",
+"Pepino",
+"Abobrinha",
+"Berinjela",
+"Mandioca",
+"Milho",
+"Ervilha",
+"Banana",
+"Maçã",
+"Laranja",
+"Mamão",
+"Manga",
+"Melancia",
+"Abacaxi",
+"Uva",
+"Limão",
+"Morango",
+"Abacate",
+"Pera",
+"Sabão em pó",
+"Amaciante",
+"Detergente",
+"Desinfetante",
+"Água sanitária",
+"Esponja",
+"Papel higiênico",
+"Papel toalha",
+"Saco de lixo",
+"Shampoo",
+"Condicionador",
+"Sabonete",
+"Creme dental",
+"Escova de dentes",
+"Desodorante",
+"Creme corporal",
+"Fraldas",
+"Ração",
+"Água",
+"Refrigerante",
+"Suco",
+"Chá",
+"Iogurte",
+"Leite condensado",
+"Creme de leite",
+"Queijo ralado",
+"Caldo de carne",
+"Caldo de galinha",
+"Farofa",
+"Batata palha",
+"Leite em pó",
+"Achocolatado",
+"Gelatina",
+"Fermento",
+"Milho de pipoca",
+"Atum",
+"Sardinha",
+"Mussarela",
+"Requeijão"
+
+];
+
+
+/* ==========================================================
+   CRIA OS PRODUTOS
+   ========================================================== */
+
+let produtos =
+produtosIniciais.map(
+function(nome){
+
+return{
+
+nome:nome,
+
+preco:"",
+
+quantidade:""
+
+};
+
+});
+
+
+/* ==========================================================
+   FORMATA DINHEIRO
+   ========================================================== */
+
+function dinheiro(valor){
+
+return new Intl.NumberFormat(
+"pt-BR",
+{
+style:"currency",
+currency:"BRL"
+}
+).format(
+Number(valor)||0
+);
+
+}
+
+
+/* ==========================================================
+   CONVERTE VALOR
+   ========================================================== */
+
+function numero(valor){
+
+if(
+valor===null||
+valor===undefined
+){
+
+return 0;
+
+}
+
+
+let texto=
+String(valor)
+.trim()
+.replace(/R\$/g,"")
+.replace(/\s/g,"");
+
+
+if(
+texto.includes(",")
+){
+
+texto=
+texto
+.replace(/\./g,"")
+.replace(",",".");
+}
+
+
+let resultado=
+Number(texto);
+
+
+if(
+isNaN(resultado)
+){
+
+return 0;
+
+}
+
+
+return resultado;
+
+}
+
+
+/* ==========================================================
+   QUANTIDADE
+   ========================================================== */
+
+function quantidadeNumero(valor){
+
+let q=
+parseInt(valor,10);
+
+
+if(
+isNaN(q)||
+q<0
+){
+
+return 0;
+
+}
+
+
+return q;
+
+}
+
+
+/* ==========================================================
+   DESENHA LISTA
+   ========================================================== */
+
+function desenharLista(){
+
+const lista=
+document.getElementById(
+"listaProdutos"
+);
+
+
+const busca=
+document.getElementById(
+"campoBusca"
+)
+.value
+.toLowerCase()
+.trim();
+
+
+lista.innerHTML="";
+
+
+let encontrados=0;
+
+
+produtos.forEach(
+function(produto,index){
+
+if(
+!produto.nome
+.toLowerCase()
+.includes(busca)
+){
+
+return;
+
+}
+
+
+encontrados++;
+
+
+const linha=
+document.createElement(
+"div"
+);
+
+linha.className="item";
+
+
+/* NOME */
+
+const nome=
+document.createElement(
+"div"
+);
+
+nome.className=
+"nomeProduto";
+
+nome.textContent=
+produto.nome;
+
+
+/* PREÇO */
+
+const preco=
+document.createElement(
+"input"
+);
+
+preco.className="preco";
+
+preco.type="text";
+
+preco.inputMode=
+"decimal";
+
+preco.placeholder=
+"R$ 0,00";
+
+preco.value=
+produto.preco;
+
+
+preco.addEventListener(
+"input",
+function(event){
+
+produtos[index].preco=
+event.target.value;
+
+atualizarTotal();
+
+}
+);
+
+
+/* QUANTIDADE */
+
+const quantidade=
+document.createElement(
+"input"
+);
+
+quantidade.className=
+"quantidade";
+
+quantidade.type=
+"number";
+
+quantidade.inputMode=
+"numeric";
+
+quantidade.min="0";
+
+quantidade.step="1";
+
+quantidade.placeholder="0";
+
+quantidade.value=
+produto.quantidade;
+
+
+quantidade.addEventListener(
+"input",
+function(event){
+
+produtos[index].quantidade=
+event.target.value;
+
+atualizarTotal();
+
+}
+);
+
+
+/* REMOVER */
+
+const remover=
+document.createElement(
+"button"
+);
+
+remover.className=
+"remover";
+
+remover.textContent="×";
+
+remover.title=
+"Remover produto";
+
+
+remover.onclick=
+function(){
+
+produtos.splice(
+index,
+1
+);
+
+desenharLista();
+
+atualizarTotal();
+
+};
+
+
+/* MONTA LINHA */
+
+linha.appendChild(nome);
+
+linha.appendChild(preco);
+
+linha.appendChild(quantidade);
+
+linha.appendChild(remover);
+
+
+lista.appendChild(linha);
+
+}
+
+);
+
+
+if(
+encontrados===0
+){
+
+lista.innerHTML=
+'<div class="vazio">'+
+"Nenhum produto encontrado."+
+"</div>";
+
+}
+
+
+atualizarTotal();
+
+}
+
+
+/* ==========================================================
+   CALCULA TOTAL
+   ========================================================== */
+
+function atualizarTotal(){
+
+let subtotal=0;
+
+let quantidadeProdutos=0;
+
+let unidadesTotais=0;
+
+
+produtos.forEach(
+function(produto){
+
+const preco=
+numero(
+produto.preco
+);
+
+
+const quantidade=
+quantidadeNumero(
+produto.quantidade
+);
+
+
+/*
+   TERCEIRA CALCULADORA:
+
+   PREÇO × QUANTIDADE
+*/
+
+const valorProduto=
+preco*
+quantidade;
+
+
+subtotal+=
+valorProduto;
+
+
+if(
+quantidade>0
+){
+
+quantidadeProdutos++;
+
+}
+
+
+unidadesTotais+=
+quantidade;
+
+}
+
+);
+
+
+/* DESCONTO */
+
+const desconto=
+numero(
+document.getElementById(
+"desconto"
+).value
+);
+
+
+let total=
+subtotal-desconto;
+
+
+if(
+total<0
+){
+
+total=0;
+
+}
+
+
+/* MOSTRA VALORES */
+
+document.getElementById(
+"subtotal"
+)
+.textContent=
+dinheiro(subtotal);
+
+
+document.getElementById(
+"totalCompra"
+)
+.textContent=
+dinheiro(subtotal);
+
+
+document.getElementById(
+"totalFinal"
+)
+.textContent=
+dinheiro(total);
+
+
+document.getElementById(
+"descontoMostrado"
+)
+.textContent=
+dinheiro(desconto);
+
+
+document.getElementById(
+"quantidadeItens"
+)
+.textContent=
+quantidadeProdutos;
+
+
+document.getElementById(
+"unidadesTotais"
+)
+.textContent=
+unidadesTotais;
+
+}
+
+
+/* ==========================================================
+   PESQUISA
+   ========================================================== */
+
+function filtrarProdutos(){
+
+desenharLista();
+
+}
+
+
+/* ==========================================================
+   ADICIONAR PRODUTO
+   ========================================================== */
+
+function adicionarProduto(){
+
+const nome=
+prompt(
+"Digite o nome do novo produto:"
+);
+
+
+if(
+nome===null
+){
+
+return;
+
+}
+
+
+const nomeLimpo=
+nome.trim();
+
+
+if(
+nomeLimpo===""
+){
+
+alert(
+"Digite um nome válido."
+);
+
+return;
+
+}
+
+
+produtos.push({
+
+nome:nomeLimpo,
+
+preco:"",
+
+quantidade:""
+
+});
+
+
+desenharLista();
+
+
+const campo=
+document.getElementById(
+"campoBusca"
+);
+
+
+campo.value=
+nomeLimpo;
+
+
+filtrarProdutos();
+
+}
+
+
+/* ==========================================================
+   LIMPAR
+   ========================================================== */
+
+function limparPrecos(){
+
+const confirmar=
+confirm(
+"Deseja limpar preços e quantidades?"
+);
+
+
+if(
+!confirmar
+){
+
+return;
+
+}
+
+
+produtos.forEach(
+function(produto){
+
+produto.preco="";
+
+produto.quantidade="";
+
+}
+);
+
+
+document.getElementById(
+"desconto"
+).value="";
+
+
+desenharLista();
+
+atualizarTotal();
+
+}
+
+
+/* ==========================================================
+   CALCULADORA RÁPIDA
+   ========================================================== */
+
+function calcularRapido(){
+
+let expressao=
+document.getElementById(
+"campoCalculo"
+).value;
+
+
+expressao=
+expressao
+.replace(/,/g,".")
+.trim();
+
+
+if(
+expressao===""
+){
+
+document.getElementById(
+"resultadoRapido"
+)
+.textContent=
+"R$ 0,00";
+
+return;
+
+}
+
+
+if(
+!/^[0-9+\-*/().\s]+$/
+.test(expressao)
+){
+
+document.getElementById(
+"resultadoRapido"
+)
+.textContent=
+"Conta inválida";
+
+return;
+
+}
+
+
+try{
+
+const resultado=
+Function(
+'"use strict";return ('+
+expressao+
+')'
+)();
+
+
+if(
+typeof resultado!=="number"||
+!isFinite(resultado)
+){
+
+throw new Error();
+
+}
+
+
+document.getElementById(
+"resultadoRapido"
+)
+.textContent=
+dinheiro(resultado);
+
+}
+
+catch(erro){
+
+document.getElementById(
+"resultadoRapido"
+)
+.textContent=
+"Erro na conta";
+
+}
+
+}
+
+
+/* ==========================================================
+   ENTER
+   ========================================================== */
+
+document
+.getElementById(
+"campoCalculo"
+)
+.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key==="Enter"
+){
+
+calcularRapido();
+
+}
+
+}
+);
+
+
+/* ==========================================================
+   INICIALIZAÇÃO
+   ========================================================== */
+
+desenharLista();
+
+atualizarTotal();
+
+
+</script>
+
+</body>
+
+</html>
